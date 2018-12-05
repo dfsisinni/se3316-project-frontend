@@ -21,6 +21,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CustomerViewComponent } from './customer-view/customer-view.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ShoppingCartItemComponent } from './shopping-cart/shopping-cart-item/shopping-cart-item.component';
+import { StoreItemsComponent } from './store-items/store-items.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ShoppingCartItemComponent } from './shopping-cart/shopping-cart-item/sh
     LoginComponent,
     CustomerViewComponent,
     ShoppingCartComponent,
-    ShoppingCartItemComponent
+    ShoppingCartItemComponent,
+    StoreItemsComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { AppStore } from '../redux/Store';
 import { Store } from 'redux';
 import { AppState } from '../redux/AppState';
-import { ApiService } from '../services/ApiService';
 import { User } from 'src/redux/objects/User';
 import { UserType } from 'src/models/api/UserType';
 
@@ -14,6 +13,7 @@ import { UserType } from 'src/models/api/UserType';
 export class AppComponent {
   title: string;
   user: User;
+  isAuthenticatedCustomer: boolean;
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     store.subscribe(() => this.readState());
@@ -24,9 +24,6 @@ export class AppComponent {
     const state: AppState = this.store.getState();
     this.title = state.title;
     this.user = state.user;
-  }
-
-  isAuthenticatedCustomer() {
-    return this.user && this.user.type === UserType.CUSTOMER;
+    this.isAuthenticatedCustomer = this.user && this.user.type === UserType.CUSTOMER;
   }
 }

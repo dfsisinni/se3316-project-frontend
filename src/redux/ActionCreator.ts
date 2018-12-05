@@ -5,6 +5,9 @@ import { ActionType } from "./ActionType";
 import { ChangeStoreQuantityAction } from "./actions/ChangeStoreQuantityAction";
 import { ItemResponse } from "src/models/api/response/ItemResponse";
 import { SetItemAction } from "./actions/SetItemAction";
+import { RemoveItemFromCart } from "./actions/RemoveItemFromCart";
+import { ShoppingCartEntry } from "./objects/ShoppingCartEntry";
+import { PurchaseItemsAction } from "./actions/PurchaseItemsAction";
 
 
 export class ActionCreator {
@@ -36,6 +39,26 @@ export class ActionCreator {
         };
 
         return ActionCreator.createAction(action, ActionType.SET_ITEM_ACTION);
+    }
+
+    public static removeItemFromCart(index: number) {
+        const action: RemoveItemFromCart = {
+            cartIndex: index
+        };
+
+        return ActionCreator.createAction(action, ActionType.REMOVE_ITEM_FROM_CART);
+    }
+
+    public static createClearCartAction() {
+        return ActionCreator.createAction(undefined, ActionType.REMOVE_ALL_FROM_CART);
+    }
+
+    public static createPurchaseItemsAction(items: ShoppingCartEntry[]) {
+        const action: PurchaseItemsAction = {
+            items: items
+        };
+
+        return ActionCreator.createAction(action, ActionType.BUY_ITEMS);
     }
 
     private static createAction<T>(action: T, type: ActionType): Action<T> {

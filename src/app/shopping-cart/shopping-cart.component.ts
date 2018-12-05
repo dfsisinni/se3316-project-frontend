@@ -2,9 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AppStore } from 'src/redux/Store';
 import { Store } from 'redux';
 import { AppState } from 'src/redux/AppState';
-import { ShoppingCart } from 'src/redux/objects/ShoppingCart';
 import { ItemResponse } from 'src/models/api/response/ItemResponse';
 import { ActionCreator } from 'src/redux/ActionCreator';
+import { ShoppingCartEntry } from 'src/redux/objects/ShoppingCartEntry';
+import { ApiService } from 'src/services/ApiService';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,9 +13,11 @@ import { ActionCreator } from 'src/redux/ActionCreator';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  cart: ShoppingCart;
+  cartItems: ShoppingCartEntry[];
   token: string;
   items: ItemResponse[];
+  displayedColumns = ['name', 'quantity', 'price', 'increment', 'decrement', 'remove'];
+  price: number = 0;
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     this.store.subscribe(() => this.readItems());
@@ -22,16 +25,25 @@ export class ShoppingCartComponent implements OnInit {
 
   private readItems() {
     const state = this.store.getState();
-    this.cart = state.user.shoppingCart;
     this.token = state.user.token;
     this.items = state.store;
+    this.cartItems = state.user.shoppingCart.items;
+    
+    let sum = 0;
+
+    for (let i = 0; i < this.cartItems.length; i++) {
+      const price = this.getPrice(i);
+      sum += price*this.cartItems[i].quantity;
+    }
+
+    this.price = sum;
   }
 
   ngOnInit() {
   }
 
   increment(cartIndex: number) {
-    const storeIndex = this.items.findIndex((item) => item.id === this.cart.items[cartIndex].itemId);
+    const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
     const item = this.items[storeIndex];
     if (item.quantity === 0) {
       alert("Not enough available!");
@@ -42,21 +54,42 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   decrement(cartIndex: number) {
-    if (this.cart.items[cartIndex].quantity === 1) {
+    if (this.cartItems[cartIndex].quantity === 1) {
       alert("Click remove to remove the item from the cart!");
       return;
     }
 
-    const storeIndex = this.items.findIndex((item) => item.id === this.cart.items[cartIndex].itemId);
+    const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
     this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(storeIndex, 1, cartIndex));
   }
 
   remove(index: number) {
-
+    this.store.dispatch(ActionCreator.removeItemFromCart(index));
   }
 
-  getPrice(index: number): number {
-    return 3.5;
+  getPrice(cartIndex: number): number {
+    const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
+    return this.items[storeIndex].price;
   }
 
+  getName(cartIndex: number): string {
+    console.log(cartIndex);
+    const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
+    return this.items[storeIndex].name;
+  }
+
+  clear() {
+    if (confirm("Are you sure you want to clear the cart?")) {
+      this.store.dispatch(ActionCreator.createClearCartAction());
+    }
+  }
+
+  async buy() {
+    if (confirm("Are you sure you want to purchase these items?")) {
+      const result = await ApiService.purchaseItem(this.cartItems, this.token);
+      if (result && result.status) {
+        this.store.dispatch(ActionCreator.createPurchaseItemsAction(result.response));
+      }
+    }
+  }
 }

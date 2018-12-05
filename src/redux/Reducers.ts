@@ -4,6 +4,7 @@ import { ActionType } from './ActionType';
 import { LoginAction } from './actions/LoginAction';
 import { ChangeStoreQuantityAction } from './actions/ChangeStoreQuantityAction';
 import { SetItemAction } from './actions/SetItemAction';
+import { RemoveItemFromCart } from './actions/RemoveItemFromCart';
 
 const initialState: AppState = {
     title: "Lab 5",
@@ -12,6 +13,8 @@ const initialState: AppState = {
 };
 
 export default function app(state: AppState = initialState, action: Action<any>): AppState {
+    console.log(action);
+
     if (action.type === ActionType.LOGIN) {
         const props = action.payload as LoginAction;
         return {
@@ -31,7 +34,20 @@ export default function app(state: AppState = initialState, action: Action<any>)
             ...state
         };
 
-        newState.user.shoppingCart.items[props.cartIndex].quantity -= props.storeDelta;
+        if (props.cartIndex === -1 ) {
+            const item = newState.user.shoppingCart.items.find((it) => it.itemId === newState.store[props.storeIndex].id);
+            if (item) {
+                item.quantity -= props.storeDelta;
+            } else {
+                newState.user.shoppingCart.items.push({
+                    quantity: -props.storeDelta,
+                    itemId: newState.store[props.storeIndex].id
+                });
+            }
+        } else {
+            newState.user.shoppingCart.items[props.cartIndex].quantity -= props.storeDelta;
+        }
+        
         newState.store[props.storeIndex].quantity += props.storeDelta;
 
         return newState;
@@ -42,6 +58,40 @@ export default function app(state: AppState = initialState, action: Action<any>)
             ...state,
             store: props.items
         };
+    } else if (action.type === ActionType.REMOVE_ITEM_FROM_CART) {
+        const props = action.payload as RemoveItemFromCart;
+
+        const item = state.user.shoppingCart.items[props.cartIndex];
+        const newState = {
+            ...state,
+        };
+
+        newState.user.shoppingCart.items = [...state.user.shoppingCart.items.slice(0, props.cartIndex),
+                                            ...state.user.shoppingCart.items.slice(props.cartIndex + 1)];
+        
+        const storeItem = newState.store.find((it) => it.id === item.itemId);
+        storeItem.quantity += item.quantity;
+
+        return newState;
+    } else if (action.type === ActionType.REMOVE_ALL_FROM_CART) {
+        const newState = {
+            ...state,
+        };
+        const items = newState.user.shoppingCart.items;
+        newState.user.shoppingCart.items = [];
+
+        for (let item of items) {
+            const storeItem = newState.store.find((it) => it.id === item.itemId);
+            storeItem.quantity += item.quantity;
+        }
+
+        return newState;
+    } else if (action.type === ActionType.BUY_ITEMS) {
+        const newState = {
+            ...state,
+        };
+        newState.user.shoppingCart.items = [];
+        return newState;
     }
  
     return state;

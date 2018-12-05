@@ -1,5 +1,8 @@
 export enum ActionType {
     LOGIN,
     CHANGE_STORE_QUANTITY,
-    SET_ITEM_ACTION
+    SET_ITEM_ACTION,
+    REMOVE_ITEM_FROM_CART,
+    REMOVE_ALL_FROM_CART,
+    BUY_ITEMS
 }
