@@ -24,6 +24,12 @@ export class StoreItemsComponent implements OnInit {
     const state = this.store.getState();
     this.authorizedCustomer = state.user && state.user.type === UserType.CUSTOMER;
     this.items = state.store;
+
+    if (this.authorizedCustomer) {
+      this.displayedColumns = ['name', 'quantity', 'price', 'add'];
+    } else {
+      this.displayedColumns = ['name', 'quantity', 'price'];
+    }
   }
 
   ngOnInit() {

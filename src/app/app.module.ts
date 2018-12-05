@@ -22,6 +22,7 @@ import { CustomerViewComponent } from './customer-view/customer-view.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ShoppingCartItemComponent } from './shopping-cart/shopping-cart-item/shopping-cart-item.component';
 import { StoreItemsComponent } from './store-items/store-items.component';
+import { GenericComponent } from './generic/generic.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StoreItemsComponent } from './store-items/store-items.component';
     CustomerViewComponent,
     ShoppingCartComponent,
     ShoppingCartItemComponent,
-    StoreItemsComponent
+    StoreItemsComponent,
+    GenericComponent
   ],
   imports: [
     BrowserModule,
