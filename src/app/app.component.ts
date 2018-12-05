@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { AppStore } from '../redux/Store';
 import { Store } from 'redux';
 import { AppState } from '../redux/AppState';
+import { ApiService } from '../services/ApiService';
 
 @Component({
   selector: 'app-root',

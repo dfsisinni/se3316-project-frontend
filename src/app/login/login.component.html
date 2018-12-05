@@ -1,0 +1,12 @@
+<div class="example-container">
+    <mat-form-field>
+        <input name="email" matInput placeholder="Email" [(ngModel)]="email">
+    </mat-form-field>
+    <mat-form-field>
+        <input name="password" matInput placeholder="Password" type="password" [(ngModel)]="password">
+    </mat-form-field>
+    <div class="example-button-row">
+        <button mat-button color="primary" (click)="login()">Login</button>
+        <button mat-button color="accent" (click)="register()">Register</button>
+    </div>
+</div>

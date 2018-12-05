@@ -1,6 +1,10 @@
-export interface Item {
-    id: string;
+import { CommentResponse } from "./CommentResponse";
+
+export interface ItemResponse {
+    id: string,
     name: string;
-    quantityAvailable: number;
-    rating: number;
+    description: string;
+    quantity: number;
+    price: number;
+    comments: CommentResponse[];
 }
