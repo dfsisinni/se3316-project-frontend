@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { AppStore } from '../redux/Store';
+import { Store } from 'redux';
+import { AppState } from '../redux/AppState';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'lab5';
+  title: string;
+
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
+    store.subscribe(() => this.readState());
+    this.readState();
+  }
+
+  readState() {
+    const state: AppState = this.store.getState();
+    this.title = state.title;
+  }
 }
