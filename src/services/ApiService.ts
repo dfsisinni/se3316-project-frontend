@@ -2,6 +2,7 @@ import { UserRequest } from "src/models/api/request/UserRequest";
 import * as validate from 'validate.js';
 import { Response } from "src/models/api/response/Response";
 import { TokenResponse } from "src/models/api/response/TokenResponse";
+import { UserInfoResponse } from "src/models/api/response/UserInfoResponse";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -71,7 +72,7 @@ export class ApiService {
         }
 
         return fetch(ApiService.BASE_URL + "/api/auth/register", {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -89,5 +90,27 @@ export class ApiService {
             .catch((err) => {
                 alert(err);
             });
+    }
+
+    public static async me(token: string) {
+        return fetch(ApiService.BASE_URL + "/api/auth/me", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<UserInfoResponse>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
     }
 }

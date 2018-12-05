@@ -18,6 +18,6 @@
   </li>
 </ul>
 
-<app-login></app-login>
+<app-login *ngIf="!user"></app-login>
 
 <router-outlet></router-outlet>

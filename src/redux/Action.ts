@@ -1,6 +1,6 @@
 import { ActionType } from './ActionType';
 
-export interface Action {
+export interface Action<T> {
     type: ActionType;
-    payload?: any;
+    payload?: T;
 }
