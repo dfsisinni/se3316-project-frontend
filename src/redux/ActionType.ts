@@ -1,3 +1,5 @@
 export enum ActionType {
-    LOGIN
+    LOGIN,
+    CHANGE_STORE_QUANTITY,
+    SET_ITEM_ACTION
 }

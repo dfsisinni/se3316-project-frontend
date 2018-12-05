@@ -3,6 +3,7 @@ import * as validate from 'validate.js';
 import { Response } from "src/models/api/response/Response";
 import { TokenResponse } from "src/models/api/response/TokenResponse";
 import { UserInfoResponse } from "src/models/api/response/UserInfoResponse";
+import { ItemResponse } from "src/models/api/response/ItemResponse";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -105,6 +106,27 @@ export class ApiService {
         .then((response: Response<any>) => {
             if (response.status) {
                 return response as Response<UserInfoResponse>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async getItems() {
+        return fetch(ApiService.BASE_URL + "/api/item", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<ItemResponse[]>;
             } else {
                 alert(response.response);
             }

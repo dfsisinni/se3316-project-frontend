@@ -13,14 +13,22 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRippleModule
+  MatRippleModule,
+  MatTabsModule,
+  MatTableModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CustomerViewComponent } from './customer-view/customer-view.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ShoppingCartItemComponent } from './shopping-cart/shopping-cart-item/shopping-cart-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    CustomerViewComponent,
+    ShoppingCartComponent,
+    ShoppingCartItemComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +38,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatInputModule,
     MatRippleModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [appStoreProviders],
   bootstrap: [AppComponent],
