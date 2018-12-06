@@ -6,6 +6,7 @@ import { ItemResponse } from 'src/models/api/response/ItemResponse';
 import { ItemRequest } from 'src/models/api/request/ItemRequest';
 import { ApiService } from 'src/services/ApiService';
 import { ActionCreator } from 'src/redux/ActionCreator';
+import { ValidationUtility } from 'src/utilities/ValidationUtility';
 
 @Component({
   selector: 'app-item-edit-list',
@@ -47,10 +48,10 @@ export class ItemEditListComponent implements OnInit {
     }
 
     const itemRequest: ItemRequest = {
-      name: item.name,
+      name: ValidationUtility.cleanInput(item.name),
       quantity: item.quantity,
       price: item.price,
-      description: item.description
+      description: ValidationUtility.cleanInput(item.description)
     };
 
     console.log(itemRequest);
@@ -94,6 +95,8 @@ export class ItemEditListComponent implements OnInit {
       return;
     }
     
+    item.description = ValidationUtility.cleanInput(item.description);
+    item.name = ValidationUtility.cleanInput(item.name);
 
     const result = await ApiService.createItem(item, this.token);
     if (result && result.status) {

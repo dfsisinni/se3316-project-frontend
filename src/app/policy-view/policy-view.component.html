@@ -6,6 +6,9 @@
 </div>
 
 <div *ngIf="isUserManager">
+  <p><strong>Instructions: </strong>
+  Edit policies in the text areas below. Use the notice response tool to log requests, notices and disputes.
+  </p>
   <div *ngFor="let policy of policies; let i = index">
     <h6>{{policy.name}}</h6>
     <textarea rows="4" cols="50" [(ngModel)]="policy.body">
@@ -16,7 +19,7 @@
 
 <app-notice-view *ngIf="token"></app-notice-view>
 
-<div>
+<div *ngIf="!isUserManager">
   Email: <input type="text" [(ngModel)]="request.email"/>
   Title: <input type="text" [(ngModel)]="request.title"/>
   Concern: <input type="text" [(ngModel)]="request.concern"/>

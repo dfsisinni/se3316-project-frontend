@@ -8,6 +8,7 @@ import { ItemResponse } from 'src/models/api/response/ItemResponse';
 import { ApiService } from 'src/services/ApiService';
 import { WishListRequest } from 'src/models/api/request/WishListRequest';
 import { ActionCreator } from 'src/redux/ActionCreator';
+import { ValidationUtility } from 'src/utilities/ValidationUtility';
 
 @Component({
   selector: 'app-form',
@@ -78,9 +79,9 @@ export class FormComponent implements OnInit {
     }
 
     const request: WishListRequest = {
-      name: this.list.name,
+      name: ValidationUtility.cleanInput(this.list.name),
       private: this.list.private,
-      description: this.list.description,
+      description: ValidationUtility.cleanInput(this.list.description),
       items: this.list.items
     };
     if (this.newItem) {

@@ -9,6 +9,7 @@ import { ActionCreator } from 'src/redux/ActionCreator';
 import { UserType } from 'src/models/api/UserType';
 import { NoticeRequest } from 'src/models/api/request/NoticeRequest';
 import * as moment from 'moment';
+import { ValidationUtility } from 'src/utilities/ValidationUtility';
 
 @Component({
   selector: 'app-policy-view',
@@ -50,6 +51,9 @@ export class PolicyViewComponent implements OnInit {
   }
 
   private async submitForm() {
+    this.request.email = ValidationUtility.cleanInput(this.request.email);
+    this.request.concern = ValidationUtility.cleanInput(this.request.concern);
+    this.request.title = ValidationUtility.cleanInput(this.request.title);
     const result = await ApiService.createNotice(this.request);
     if (result && result.status) {
       this.request = {
@@ -65,8 +69,8 @@ export class PolicyViewComponent implements OnInit {
 
   private save(index: number) {
     ApiService.updatePolicy({
-      name: this.policies[index].name,
-      body: this.policies[index].body
+      name: ValidationUtility.cleanInput(this.policies[index].name),
+      body: ValidationUtility.cleanInput(this.policies[index].body)
     }, this.policies[index].id, this.token)
       .then((res: Response<string>) => {
         if (!res.status) {

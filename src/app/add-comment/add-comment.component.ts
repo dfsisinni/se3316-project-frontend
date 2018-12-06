@@ -8,6 +8,7 @@ import { Store } from 'redux';
 import { ActionCreator } from 'src/redux/ActionCreator';
 import { CommentResponse } from 'src/models/api/response/CommentResponse';
 import * as moment from 'moment';
+import { ValidationUtility } from 'src/utilities/ValidationUtility';
 
 @Component({
   selector: 'app-add-comment',
@@ -48,7 +49,7 @@ export class AddCommentComponent implements OnInit {
         const resp: CommentResponse = {
           email: this.email,
           rating: this.rating,
-          comment: this.comment,
+          comment: ValidationUtility.cleanInput(this.comment),
           createdOn: moment().unix(),
           hidden: false
         };

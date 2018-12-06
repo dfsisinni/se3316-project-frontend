@@ -18,7 +18,6 @@
       <td><button mat-button color="primary" (click)="delete(i)">Delete</button></td>
 
       <td>
-        {{item.comments.length}}
         <ul>
           <li *ngFor="let comment of item.comments">{{comment.hidden ? "HIDDEN" : "VISIBLE"}} {{comment.comment}} <button (click)="toggle(comment.email, i)">Toggle</button></li>
         </ul>
