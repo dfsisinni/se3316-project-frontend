@@ -20,6 +20,8 @@ import { UserType } from "src/models/api/UserType";
 import { UpdateUserAction } from "./actions/UpdateUserAction";
 import { ReplaceItemAction } from "./actions/ReplaceItemAction";
 import { DeleteItemAction } from "./actions/DeleteItemAction";
+import { PolicyResponse } from "src/models/api/response/PolicyResponse";
+import { SetPoliciesAction } from "./actions/SetPoliciesAction";
 
 
 export class ActionCreator {
@@ -163,6 +165,14 @@ export class ActionCreator {
         };
 
         return ActionCreator.createAction(action, ActionType.ADD_ITEM_ACTION);
+    }
+
+    public static createSetPoliciesAction(policies: PolicyResponse[]) {
+        const action: SetPoliciesAction = {
+            policies: policies
+        };
+
+        return ActionCreator.createAction(action, ActionType.SET_POLICIES);
     }
 
     private static createAction<T>(action: T, type: ActionType): Action<T> {

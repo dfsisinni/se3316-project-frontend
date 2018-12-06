@@ -14,6 +14,7 @@ import { SetManagerUsersAction } from './actions/SetManagerUsersAction';
 import { UpdateUserAction } from './actions/UpdateUserAction';
 import { ReplaceItemAction } from './actions/ReplaceItemAction';
 import { DeleteItemAction } from './actions/DeleteItemAction';
+import { SetPoliciesAction } from './actions/SetPoliciesAction';
 
 const initialState: AppState = {
     title: "Lab 5",
@@ -22,7 +23,8 @@ const initialState: AppState = {
     otherLists: [],
     manager: {
         users: []
-    }
+    },
+    policies: []
 };
 
 export default function app(state: AppState = initialState, action: Action<any>): AppState {
@@ -221,6 +223,13 @@ export default function app(state: AppState = initialState, action: Action<any>)
                 ...state.store,
                 props.item
             ]
+        };
+    } else if (action.type === ActionType.SET_POLICIES) {
+        const props = action.payload as SetPoliciesAction;
+
+        return {
+            ...state,
+            policies: props.policies
         };
     }
  

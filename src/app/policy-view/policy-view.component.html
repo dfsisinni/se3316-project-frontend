@@ -1,0 +1,15 @@
+<div *ngIf="!isUserManager">
+  <div *ngFor="let policy of policies">
+    <h6>{{policy.name}}</h6>
+    <p>{{policy.body}}</p>
+  </div>
+</div>
+
+<div *ngIf="isUserManager">
+  <div *ngFor="let policy of policies; let i = index">
+    <h6>{{policy.name}}</h6>
+    <textarea rows="4" cols="50" [(ngModel)]="policy.body">
+    </textarea>
+    <button (click)="save(i)">Save</button>
+  </div>
+</div>

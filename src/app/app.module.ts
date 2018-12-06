@@ -31,6 +31,7 @@ import { FormComponent } from './wishlist-view/form/form.component';
 import { ManagerViewComponent } from './manager-view/manager-view.component';
 import { UserListComponent } from './manager-view/user-list/user-list.component';
 import { ItemEditListComponent } from './manager-view/item-edit-list/item-edit-list.component';
+import { PolicyViewComponent } from './policy-view/policy-view.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ItemEditListComponent } from './manager-view/item-edit-list/item-edit-l
     FormComponent,
     ManagerViewComponent,
     UserListComponent,
-    ItemEditListComponent
+    ItemEditListComponent,
+    PolicyViewComponent
   ],
   imports: [
     BrowserModule,

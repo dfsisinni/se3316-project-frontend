@@ -12,6 +12,8 @@ import { WishListRequest } from "src/models/api/request/WishListRequest";
 import { UpdateUserRequest } from "src/models/api/request/UpdateUserRequest";
 import { ItemRequest } from "src/models/api/request/ItemRequest";
 import { ModifyCommentRequest } from "src/models/api/request/ModifyCommentRequest";
+import { PolicyResponse } from "src/models/api/response/PolicyResponse";
+import { PolicyRequest } from "src/models/api/request/PolicyRequest";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -187,6 +189,49 @@ export class ApiService {
             } else {
                 alert(response.response);
             }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static getPolicies() {
+        return fetch(ApiService.BASE_URL + "/api/policy", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/jspn'
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<PolicyResponse[]>;
+            }
+
+            alert(response.response);
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static updatePolicy(policy: PolicyRequest, policyId: string, token: string) {
+        return fetch(ApiService.BASE_URL + "/api/policy/" + policyId, {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(policy)
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<string>;
+            }
+
+            alert(response.response);
         })
         .catch((err) => {
             alert(err);
