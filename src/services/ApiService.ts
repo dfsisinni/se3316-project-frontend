@@ -10,6 +10,8 @@ import { CommentResponse } from "src/models/api/response/CommentResponse";
 import { WishListResponse } from "src/models/api/response/WishListResponse";
 import { WishListRequest } from "src/models/api/request/WishListRequest";
 import { UpdateUserRequest } from "src/models/api/request/UpdateUserRequest";
+import { ItemRequest } from "src/models/api/request/ItemRequest";
+import { ModifyCommentRequest } from "src/models/api/request/ModifyCommentRequest";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -99,6 +101,74 @@ export class ApiService {
             .catch((err) => {
                 alert(err);
             });
+    }
+
+    public static updateItem(request: ItemRequest, token: string, itemId: string) {
+        return fetch(ApiService.BASE_URL + "/api/manager/item/" + itemId, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(request)
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<string>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static deleteItem(itemId: string, token: string) {
+        return fetch(ApiService.BASE_URL + "/api/manager/item/" + itemId, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<string>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static createItem(request: ItemRequest, token: string) {
+        return fetch(ApiService.BASE_URL + "/api/manager/item", {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(request)
+        })
+        .then((response) => response.json())
+        .then((res: Response<any>) => {
+            if (res.status) {
+                return res as Response<ItemResponse>;
+            } else {
+                alert(res.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
     }
 
     public static async me(token: string) {
@@ -345,6 +415,33 @@ export class ApiService {
                 'Content-Type': 'application/json',
                 'x-access-token': token
             }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<string>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async modifyComment(hidden: boolean, token: string, itemId: string, userId: string) {
+        const request: ModifyCommentRequest = {
+            hidden: hidden
+        };
+
+        return fetch(ApiService.BASE_URL + "/api/manager/item/" + itemId + "/comment/" + userId, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(request)
         })
         .then((response) => response.json())
         .then((response: Response<any>) => {

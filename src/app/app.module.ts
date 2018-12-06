@@ -30,6 +30,7 @@ import { WishlistViewComponent } from './wishlist-view/wishlist-view.component';
 import { FormComponent } from './wishlist-view/form/form.component';
 import { ManagerViewComponent } from './manager-view/manager-view.component';
 import { UserListComponent } from './manager-view/user-list/user-list.component';
+import { ItemEditListComponent } from './manager-view/item-edit-list/item-edit-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UserListComponent } from './manager-view/user-list/user-list.component'
     WishlistViewComponent,
     FormComponent,
     ManagerViewComponent,
-    UserListComponent
+    UserListComponent,
+    ItemEditListComponent
   ],
   imports: [
     BrowserModule,

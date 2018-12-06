@@ -12,6 +12,8 @@ import { DeleteMyWishListAction } from './actions/DeleteMyWishListAction';
 import { UpdateMyWishListAction } from './actions/UpdateMyWishListAction';
 import { SetManagerUsersAction } from './actions/SetManagerUsersAction';
 import { UpdateUserAction } from './actions/UpdateUserAction';
+import { ReplaceItemAction } from './actions/ReplaceItemAction';
+import { DeleteItemAction } from './actions/DeleteItemAction';
 
 const initialState: AppState = {
     title: "Lab 5",
@@ -189,6 +191,37 @@ export default function app(state: AppState = initialState, action: Action<any>)
         user.type = props.type;
 
         return newState;
+    } else if (action.type === ActionType.REPLACE_ITEM) {
+        const props = action.payload as ReplaceItemAction;
+
+        const newState = {
+            ...state
+        };
+
+        const index = newState.store.findIndex(it => it.id === props.item.id);
+        newState.store[index] = props.item;
+
+        return newState;
+    } else if (action.type === ActionType.DELETE_ITEM_ACTION) {
+        const props = action.payload as DeleteItemAction;
+        const index = state.store.findIndex((it) => it.id === props.itemId);
+
+        return {
+            ...state,
+            store: [
+                ...state.store.slice(0, index),
+                ...state.store.slice(index + 1)
+            ]
+        };
+    } else if (action.type === ActionType.ADD_ITEM_ACTION) {
+        const props = action.payload as ReplaceItemAction;
+        return {
+            ...state,
+            store: [
+                ...state.store,
+                props.item
+            ]
+        };
     }
  
     return state;

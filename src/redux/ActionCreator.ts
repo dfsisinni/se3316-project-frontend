@@ -18,6 +18,8 @@ import { UpdateMyWishListAction } from "./actions/UpdateMyWishListAction";
 import { SetManagerUsersAction } from "./actions/SetManagerUsersAction";
 import { UserType } from "src/models/api/UserType";
 import { UpdateUserAction } from "./actions/UpdateUserAction";
+import { ReplaceItemAction } from "./actions/ReplaceItemAction";
+import { DeleteItemAction } from "./actions/DeleteItemAction";
 
 
 export class ActionCreator {
@@ -137,6 +139,30 @@ export class ActionCreator {
         };
 
         return ActionCreator.createAction(action, ActionType.UPDATE_MANAGER_USER);
+    }
+
+    public static createReplaceItemAction(item: ItemResponse) {
+        const action: ReplaceItemAction = {
+            item: item
+        };
+
+        return ActionCreator.createAction(action, ActionType.REPLACE_ITEM);
+    }
+
+    public static createDeleteItemAction(itemId: string) {
+        const action: DeleteItemAction = {
+            itemId: itemId
+        };
+
+        return ActionCreator.createAction(action, ActionType.DELETE_ITEM_ACTION);
+    }
+
+    public static createAddItemAction(item: ItemResponse) {
+        const action: ReplaceItemAction = {
+            item: item
+        };
+
+        return ActionCreator.createAction(action, ActionType.ADD_ITEM_ACTION);
     }
 
     private static createAction<T>(action: T, type: ActionType): Action<T> {
