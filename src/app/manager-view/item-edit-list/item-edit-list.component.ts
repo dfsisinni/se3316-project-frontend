@@ -18,6 +18,7 @@ export class ItemEditListComponent implements OnInit {
   token: string;
   newItem: ItemRequest;
 
+  //edit item list
   constructor(@Inject(AppStore) private store: Store<AppState>) { 
     this.store.subscribe(() => this.readItems());
     this.newItem = {
@@ -28,6 +29,7 @@ export class ItemEditListComponent implements OnInit {
     }
   }
 
+  //read from state
   private readItems() {
     const state = this.store.getState();
     this.items = [
@@ -39,6 +41,7 @@ export class ItemEditListComponent implements OnInit {
   ngOnInit() {
   }
 
+  //save item
   async save(index: number) {
     const item = this.items[index];
     const err = this.validateItem(item);
@@ -67,6 +70,7 @@ export class ItemEditListComponent implements OnInit {
     }
   }
 
+  //validate item
   validateItem(item: ItemRequest | ItemResponse) {
     if (!item.name || item.name.length === 0) {
       return "Enter a valid name!";
@@ -87,6 +91,7 @@ export class ItemEditListComponent implements OnInit {
     return "";
   }
 
+  //add item
   async add() {
     const item = this.newItem;
     const err = this.validateItem(item);
@@ -110,6 +115,7 @@ export class ItemEditListComponent implements OnInit {
     }
   }
 
+  //delete item
   async delete(index: number) {
     const itemId = this.items[index].id;
 
@@ -119,6 +125,7 @@ export class ItemEditListComponent implements OnInit {
     }
   }
 
+  //toggle item
   async toggle(email: string, index: number) {
     const item = this.items[index];
     const comment = item.comments.find(x => x.email === email);

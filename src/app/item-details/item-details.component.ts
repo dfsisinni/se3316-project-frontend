@@ -12,7 +12,7 @@ export class ItemDetailsComponent implements OnInit {
   rating: number;
   item: ItemResponse;
 
-
+  //details about each item
   constructor(@Inject(MAT_DIALOG_DATA) public data: ItemResponse) {   
     this.item = {
       ...data,

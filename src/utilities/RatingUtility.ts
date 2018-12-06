@@ -4,6 +4,7 @@ export class RatingUtility {
     private constructor() {
     }
 
+    //get rating based on comments
     public static getRating(comments: CommentResponse[]): number {
         let rating  = 0;
         for (let i = 0; i < comments.length; i++) {

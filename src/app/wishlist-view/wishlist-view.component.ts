@@ -39,6 +39,7 @@ export class WishlistViewComponent implements OnInit {
     })
   }
 
+  //read items from state
   private readItems() {
     const state = this.store.getState();
     if (this.me === "true") {
@@ -49,6 +50,7 @@ export class WishlistViewComponent implements OnInit {
     this.token = state.user.token;
   }
 
+  //remove wishlist
   async remove(index: number) {
     if (confirm("Are you sure you want to remove?")) {
       const result = await ApiService.deleteMyWishList(this.token, this.wishLists[index].id);
@@ -58,6 +60,7 @@ export class WishlistViewComponent implements OnInit {
     }
   }
 
+  //open form dialog
   async details(index: number) {
         this.dialog.open(FormComponent, {
           data: {
@@ -70,6 +73,7 @@ export class WishlistViewComponent implements OnInit {
         });
   }
 
+  //open form dialog
   async add() {
     this.dialog.open(FormComponent, {
       data: {

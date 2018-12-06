@@ -17,6 +17,7 @@ export class UserListComponent implements OnInit {
   users: UserInfoResponse[];
   token: string;
 
+  //shows user list
   constructor(@Inject(AppStore) private store: Store<AppState>) { 
     this.store.subscribe(() => this.readItems());
     ApiService.getUsers(this.store.getState().user.token)
@@ -27,13 +28,14 @@ export class UserListComponent implements OnInit {
         }
       });
   }
-
+  //read from state
   private readItems() {
     const state = this.store.getState();
     this.users = state.manager.users;
     this.token = state.user.token;
   }
 
+  //switch whether user is active
   private async switchActive(index: number) {
     const request: UpdateUserRequest = {
       active: !this.users[index].active,
@@ -43,6 +45,7 @@ export class UserListComponent implements OnInit {
     this.performUpdate(request, index);
   }
 
+  //switch user type
   private async switchType(index: number) {
     const request: UpdateUserRequest = {
       active: this.users[index].active,
@@ -52,6 +55,7 @@ export class UserListComponent implements OnInit {
     this.performUpdate(request, index);
   }
 
+  //update user
   private async performUpdate(request: UpdateUserRequest, index: number) {
     const result = await ApiService.updateUser(this.token, request, this.users[index].id);
     if (result && result.status) {

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
+  //login
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     this.email = '';
     this.password = '';
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  //login
   async login() {
     const response = await ApiService.login(this.email, this.password);
     if (response && response.status) {
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  //register user
   async register() {
     const response = await ApiService.register(this.email, this.password);
     if (response && response.status) {

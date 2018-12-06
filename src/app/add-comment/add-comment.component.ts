@@ -32,6 +32,7 @@ export class AddCommentComponent implements OnInit {
   ngOnInit() {
   }
 
+  //create comment
   async createComment() {
     if (!this.comment || this.comment.length === 0) {
       alert("Please enter a valid comment!");

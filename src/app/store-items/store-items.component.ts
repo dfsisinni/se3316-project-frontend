@@ -26,6 +26,7 @@ export class StoreItemsComponent implements OnInit {
 
   @Input() sortLimitTen: string;
 
+  //store items
   constructor(@Inject(AppStore) private store: Store<AppState>, public dialog: MatDialog) {
     ApiService.getItems()
       .then((res) => {
@@ -37,6 +38,7 @@ export class StoreItemsComponent implements OnInit {
     this.store.subscribe(() => this.readItems());
   }
 
+  //read items from redux
   private readItems() {
     const state = this.store.getState();
     this.authorizedCustomer = state.user && state.user.type === UserType.CUSTOMER;
@@ -80,12 +82,14 @@ export class StoreItemsComponent implements OnInit {
     }
   }
 
+  //open details dialog
   public details(index: number) {
     this.dialog.open(ItemDetailsComponent, {
       data: this.items[index]
     });
   }
 
+  //add comment
   public addComment(index: number) {
     const item = this.items[index];
     if (item.comments.filter(x => x.email === this.email).length > 0) {
@@ -104,6 +108,7 @@ export class StoreItemsComponent implements OnInit {
   ngOnInit() {
   }
 
+  //add item to cart
   addToCart(index: number) {
     this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(this.items[index].id, -1, -1));
   }

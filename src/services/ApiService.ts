@@ -17,6 +17,7 @@ import { PolicyRequest } from "src/models/api/request/PolicyRequest";
 import { NoticeResponse } from "src/models/api/response/NoticeResponse";
 import { NoticeRequest } from "src/models/api/request/NoticeRequest";
 
+//access backend
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
     private static readonly MANAGER: string = "store manager";

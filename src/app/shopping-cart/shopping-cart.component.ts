@@ -23,6 +23,7 @@ export class ShoppingCartComponent implements OnInit {
     this.store.subscribe(() => this.readItems());
   }
 
+  //read items from state
   private readItems() {
     const state = this.store.getState();
     this.token = state.user.token;
@@ -42,6 +43,7 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit() {
   }
 
+  //increment cart item
   increment(cartIndex: number) {
     const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
     const item = this.items[storeIndex];
@@ -53,6 +55,7 @@ export class ShoppingCartComponent implements OnInit {
     this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(this.cartItems[cartIndex].itemId, -1, cartIndex));
   }
 
+  //decrement cart item
   decrement(cartIndex: number) {
     if (this.cartItems[cartIndex].quantity === 1) {
       alert("Click remove to remove the item from the cart!");
@@ -62,27 +65,31 @@ export class ShoppingCartComponent implements OnInit {
     this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(this.cartItems[cartIndex].itemId, 1, cartIndex));
   }
 
+  //remove item from cart
   remove(index: number) {
     this.store.dispatch(ActionCreator.removeItemFromCart(index));
   }
 
+  //retrieve cart price
   getPrice(cartIndex: number): number {
     const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
     return this.items[storeIndex].price;
   }
 
+  //retrieve item name
   getName(cartIndex: number): string {
-    console.log(cartIndex);
     const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
     return this.items[storeIndex].name;
   }
 
+  //clear cart
   clear() {
     if (confirm("Are you sure you want to clear the cart?")) {
       this.store.dispatch(ActionCreator.createClearCartAction());
     }
   }
 
+  //buy item
   async buy() {
     if (confirm("Are you sure you want to purchase these items?")) {
       const result = await ApiService.purchaseItem(this.cartItems, this.token);

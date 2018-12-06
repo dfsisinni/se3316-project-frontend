@@ -70,6 +70,7 @@ export class FormComponent implements OnInit {
     });
   }
 
+  //save wishlist
   private async save(index: number) {
     for (let i = 0; i < this.list.items.length; i++) {
       if (this.list.items[i].quantity <= 0) {
