@@ -88,7 +88,7 @@ export class StoreItemsComponent implements OnInit {
   public addComment(index: number) {
     const item = this.items[index];
     if (item.comments.filter(x => x.email === this.email).length > 0) {
-      alert("You have already commented on this item and are unable to add another comment!");
+      alert("You have already commented on this item and are unable to add another comment!!");
       return;
     }
     this.dialog.open(AddCommentComponent, {
