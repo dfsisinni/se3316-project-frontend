@@ -1,5 +1,5 @@
 export interface CommentResponse {
-    userId: string;
+    email: string;
     comment: string;
     createdOn: number;
     rating: number;

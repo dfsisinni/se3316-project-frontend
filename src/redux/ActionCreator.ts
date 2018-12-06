@@ -23,9 +23,9 @@ export class ActionCreator {
         return ActionCreator.createAction(loginAction, ActionType.LOGIN);
     }
 
-    public static createChangeStoreQuantityAction(storeIndex: number, storeDelta: number, cartIndex): Action<ChangeStoreQuantityAction> {
+    public static createChangeStoreQuantityAction(itemId: string, storeDelta: number, cartIndex): Action<ChangeStoreQuantityAction> {
         const action: ChangeStoreQuantityAction = {
-            storeIndex: storeIndex,
+            itemId: itemId,
             storeDelta: storeDelta,
             cartIndex: cartIndex
         };

@@ -1,5 +1,5 @@
 export interface ChangeStoreQuantityAction {
-    storeIndex: number;
+    itemId: string;
     storeDelta: number;
 
     cartIndex: number;

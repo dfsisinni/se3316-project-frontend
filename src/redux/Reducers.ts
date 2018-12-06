@@ -34,21 +34,22 @@ export default function app(state: AppState = initialState, action: Action<any>)
             ...state
         };
 
-        if (props.cartIndex === -1 ) {
-            const item = newState.user.shoppingCart.items.find((it) => it.itemId === newState.store[props.storeIndex].id);
+        if (props.cartIndex === -1) {
+            const item = newState.user.shoppingCart.items.find((it) => it.itemId === props.itemId);
             if (item) {
                 item.quantity -= props.storeDelta;
             } else {
                 newState.user.shoppingCart.items.push({
                     quantity: -props.storeDelta,
-                    itemId: newState.store[props.storeIndex].id
+                    itemId: props.itemId
                 });
             }
         } else {
             newState.user.shoppingCart.items[props.cartIndex].quantity -= props.storeDelta;
         }
-        
-        newState.store[props.storeIndex].quantity += props.storeDelta;
+
+        const itemInStore = newState.store.find(it => it.id === props.itemId);
+        itemInStore.quantity += props.storeDelta;
 
         return newState;
     } else if (action.type === ActionType.SET_ITEM_ACTION) {

@@ -1,0 +1,21 @@
+<h1>Name: {{item.name}}</h1>
+<h3>Description: {{item.description}}</h3>
+<h5>Price: ${{item.price}}</h5>
+<h5>Rating: {{rating}}</h5>
+
+<table *ngIf="item && item.comments.length > 0">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Comment</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let element of item.comments; let i = index">
+      <td>{{element.email}}</td>
+      <td>{{element.comment}}</td>
+      <td>{{element.rating}}</td>
+    </tr>
+  </tbody>
+</table>

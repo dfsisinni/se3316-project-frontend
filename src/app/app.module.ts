@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { appStoreProviders } from '../redux/Store';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material';
 
 
 import {
@@ -23,6 +24,8 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ShoppingCartItemComponent } from './shopping-cart/shopping-cart-item/shopping-cart-item.component';
 import { StoreItemsComponent } from './store-items/store-items.component';
 import { GenericComponent } from './generic/generic.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { GenericComponent } from './generic/generic.component';
     ShoppingCartComponent,
     ShoppingCartItemComponent,
     StoreItemsComponent,
-    GenericComponent
+    GenericComponent,
+    ItemDetailsComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +49,12 @@ import { GenericComponent } from './generic/generic.component';
     BrowserAnimationsModule,
     FormsModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ],
+  exports: [ItemDetailsComponent, AddCommentComponent],
   providers: [appStoreProviders],
   bootstrap: [AppComponent],
+  entryComponents: [ItemDetailsComponent, AddCommentComponent]
 })
 export class AppModule { }

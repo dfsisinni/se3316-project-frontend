@@ -50,7 +50,7 @@ export class ShoppingCartComponent implements OnInit {
       return;
     }
 
-    this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(storeIndex, -1, cartIndex));
+    this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(this.cartItems[cartIndex].itemId, -1, cartIndex));
   }
 
   decrement(cartIndex: number) {
@@ -59,8 +59,7 @@ export class ShoppingCartComponent implements OnInit {
       return;
     }
 
-    const storeIndex = this.items.findIndex((item) => item.id === this.cartItems[cartIndex].itemId);
-    this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(storeIndex, 1, cartIndex));
+    this.store.dispatch(ActionCreator.createChangeStoreQuantityAction(this.cartItems[cartIndex].itemId, 1, cartIndex));
   }
 
   remove(index: number) {
