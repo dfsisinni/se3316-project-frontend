@@ -13,3 +13,12 @@
     <button (click)="save(i)">Save</button>
   </div>
 </div>
+
+<app-notice-view *ngIf="token"></app-notice-view>
+
+<div>
+  Email: <input type="text" [(ngModel)]="request.email"/>
+  Title: <input type="text" [(ngModel)]="request.title"/>
+  Concern: <input type="text" [(ngModel)]="request.concern"/>
+  <button (click)="submitForm()">Submit</button>
+</div>

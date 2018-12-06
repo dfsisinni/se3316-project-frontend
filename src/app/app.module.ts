@@ -32,6 +32,7 @@ import { ManagerViewComponent } from './manager-view/manager-view.component';
 import { UserListComponent } from './manager-view/user-list/user-list.component';
 import { ItemEditListComponent } from './manager-view/item-edit-list/item-edit-list.component';
 import { PolicyViewComponent } from './policy-view/policy-view.component';
+import { NoticeViewComponent } from './notice-view/notice-view.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PolicyViewComponent } from './policy-view/policy-view.component';
     ManagerViewComponent,
     UserListComponent,
     ItemEditListComponent,
-    PolicyViewComponent
+    PolicyViewComponent,
+    NoticeViewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Title</th>
+      <th>Concern</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let notice of notices; let i = index">
+      <td>{{notice.id}}</td>
+      <td>{{notice.email}}</td>
+      <td>{{notice.title}}</td>
+      <td>{{notice.concern}}</td>
+      <td>{{notice.date}}</td>
+      <td>{{notice.status}}</td>
+      <td><button (click)="dispute(i)">Dispute</button></td>
+      <td><button (click)="resolve(i)">Resolve</button></td>
+      <td><button (click)="reinstate(i)">Reinstate</button></td>
+    </tr>
+  </tbody>
+</table>

@@ -7,6 +7,8 @@ import { ApiService } from 'src/services/ApiService';
 import { Response } from 'src/models/api/response/Response';
 import { ActionCreator } from 'src/redux/ActionCreator';
 import { UserType } from 'src/models/api/UserType';
+import { NoticeRequest } from 'src/models/api/request/NoticeRequest';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-policy-view',
@@ -16,11 +18,20 @@ import { UserType } from 'src/models/api/UserType';
 export class PolicyViewComponent implements OnInit {
   policies: PolicyResponse[];
   isUserManager: boolean;
-  token: string
+  token: string;
+  request: NoticeRequest;
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     this.store.subscribe(() => this.readItems());
     this.readItems();
+
+    this.request = {
+      email: '',
+      title: '',
+      concern: '',
+      date: moment().unix(),
+      status: "Lodged"
+    };
     
 
     ApiService.getPolicies()
@@ -36,6 +47,20 @@ export class PolicyViewComponent implements OnInit {
     this.token = state.user ? state.user.token : "";
     this.policies = state.policies;
     this.isUserManager = state.user && state.user.type === UserType.MANAGER;
+  }
+
+  private async submitForm() {
+    const result = await ApiService.createNotice(this.request);
+    if (result && result.status) {
+      this.request = {
+        email: '',
+        title: '',
+        concern: '',
+        date: moment().unix(),
+        status: "Lodged"
+      };
+      alert("Notice lodged!");
+    }
   }
 
   private save(index: number) {

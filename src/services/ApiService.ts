@@ -14,6 +14,8 @@ import { ItemRequest } from "src/models/api/request/ItemRequest";
 import { ModifyCommentRequest } from "src/models/api/request/ModifyCommentRequest";
 import { PolicyResponse } from "src/models/api/response/PolicyResponse";
 import { PolicyRequest } from "src/models/api/request/PolicyRequest";
+import { NoticeResponse } from "src/models/api/response/NoticeResponse";
+import { NoticeRequest } from "src/models/api/request/NoticeRequest";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -331,6 +333,73 @@ export class ApiService {
             .catch((err) => {
                 alert(err);
             });
+    }
+
+    public static async getNotices(token: string) {
+        return fetch(ApiService.BASE_URL + "/api/notices", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((res) => res.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<NoticeResponse[]>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async createNotice(request: NoticeRequest) {
+        return fetch(ApiService.BASE_URL + "/api/notices", {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(request)
+        })
+        .then((res) => res.json())
+        .then((res: Response<any>) => {
+            if (res.status) {
+                return res as Response<string>;
+            }
+
+            alert(res.response);
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async updateNotice(request: NoticeRequest, noticeId: string, token: string) {
+        return fetch(ApiService.BASE_URL + "/api/notices/" + noticeId, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(request)
+        })
+        .then((res) => res.json())
+        .then((res: Response<any>) => {
+            if (res.status) {
+                return res as Response<string>;
+            }
+
+            alert(res.response);
+        })
+        .catch((err) => {
+            alert(err);
+        });
     }
 
     public static async purchaseItem(items: ShoppingCartEntry[], token: string) {
