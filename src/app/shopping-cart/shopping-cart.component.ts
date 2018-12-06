@@ -87,6 +87,7 @@ export class ShoppingCartComponent implements OnInit {
     if (confirm("Are you sure you want to purchase these items?")) {
       const result = await ApiService.purchaseItem(this.cartItems, this.token);
       if (result && result.status) {
+        alert("RECEIPT: \n" + JSON.stringify(this.cartItems));
         this.store.dispatch(ActionCreator.createPurchaseItemsAction(result.response));
       }
     }

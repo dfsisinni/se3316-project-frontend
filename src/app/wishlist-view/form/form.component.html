@@ -1,0 +1,38 @@
+<div class="example-container">
+    <mat-form-field>
+        <input name="name" matInput placeholder="Name" [(ngModel)]="list.name" [disabled]="!canEdit">
+    </mat-form-field>
+    <mat-form-field>
+        <input name="description" matInput placeholder="Description" type="text" [(ngModel)]="list.description" [disabled]="!canEdit">
+    </mat-form-field>
+
+        <mat-checkbox matInput
+          [checked]="list.private"
+          (change)="list.private = !list.private" [disabled]="!canEdit">Private</mat-checkbox>
+
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list.items; let i = index">
+          <td>
+            <mat-select placeholder="Item" [(ngModel)]="item.itemId" style="width: 200px" [disabled]="!canEdit">
+              <mat-option *ngFor="let storeItem of items" [value]="storeItem.id">
+                {{storeItem.name}}
+              </mat-option>
+            </mat-select>
+          </td>
+          <td><input name="name" matInput placeholder="Name" [(ngModel)]="item.quantity" type="number" [disabled]="!canEdit"></td>
+          <td><button mat-button color="primary" (click)="remove(i)" [disabled]="!canEdit">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button mat-button color="primary" (click)="addItem()" [disabled]="!canEdit">Add Item</button>
+    <button mat-button color="primary" (click)="save()" [disabled]="!canEdit">Save</button>
+</div>

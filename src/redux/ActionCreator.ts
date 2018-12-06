@@ -10,6 +10,11 @@ import { ShoppingCartEntry } from "./objects/ShoppingCartEntry";
 import { PurchaseItemsAction } from "./actions/PurchaseItemsAction";
 import { CommentResponse } from "src/models/api/response/CommentResponse";
 import { AddCommentAction } from "./actions/AddCommentAction";
+import { WishListResponse } from "src/models/api/response/WishListResponse";
+import { SetMyWishListsAction } from "./actions/SetMyWishListsAction";
+import { AddMyWishListAction } from "./actions/AddMyWishListAction";
+import { DeleteMyWishListAction } from "./actions/DeleteMyWishListAction";
+import { UpdateMyWishListAction } from "./actions/UpdateMyWishListAction";
 
 
 export class ActionCreator {
@@ -63,6 +68,22 @@ export class ActionCreator {
         return ActionCreator.createAction(action, ActionType.BUY_ITEMS);
     }
 
+    public static createSetMyWishListsAction(wishLists: WishListResponse[]) {
+        const action: SetMyWishListsAction = {
+            wishLists: wishLists
+        };
+
+        return ActionCreator.createAction(action, ActionType.SET_MY_WISH_LISTS);
+    }
+
+    public static createAddMyWishListAction(wishList: WishListResponse) {
+        const action: AddMyWishListAction = {
+            wishList: wishList
+        };
+
+        return ActionCreator.createAction(action, ActionType.ADD_MY_WISH_LIST);
+    }
+
     public static createAddCommentAction(comment: CommentResponse, itemId: string) {
         const action: AddCommentAction = {
             comment: comment,
@@ -70,6 +91,31 @@ export class ActionCreator {
         };
 
         return ActionCreator.createAction(action, ActionType.ADD_COMMENT);
+    }
+
+    public static createDeleteMyWishListAction(index: number) {
+        const action: DeleteMyWishListAction = {
+            index: index
+        };
+
+        return ActionCreator.createAction(action, ActionType.DELETE_MY_WISH_LIST);
+    }
+
+    public static createUpdateMyWishListAction(index: number, wishList: WishListResponse) {
+        const action: UpdateMyWishListAction = {
+            index: index,
+            response: wishList
+        };
+
+        return ActionCreator.createAction(action, ActionType.UPDATE_MY_WISH_LIST);
+    }
+
+    public static createSetOtherWishListAction(lists: WishListResponse[]) {
+        const action: SetMyWishListsAction = {
+            wishLists: lists
+        };
+
+        return ActionCreator.createAction(action, ActionType.SET_OTHER_WISH_LISTS);
     }
 
     private static createAction<T>(action: T, type: ActionType): Action<T> {

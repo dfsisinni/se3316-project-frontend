@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { appStoreProviders } from '../redux/Store';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 
 
 import {
@@ -26,6 +26,8 @@ import { StoreItemsComponent } from './store-items/store-items.component';
 import { GenericComponent } from './generic/generic.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
+import { WishlistViewComponent } from './wishlist-view/wishlist-view.component';
+import { FormComponent } from './wishlist-view/form/form.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
     StoreItemsComponent,
     GenericComponent,
     ItemDetailsComponent,
-    AddCommentComponent
+    AddCommentComponent,
+    WishlistViewComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
@@ -50,11 +54,13 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
     FormsModule,
     MatTabsModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule,
+    MatSelectModule
   ],
-  exports: [ItemDetailsComponent, AddCommentComponent],
+  exports: [ItemDetailsComponent, AddCommentComponent, FormComponent, MatInputModule, MatFormFieldModule],
   providers: [appStoreProviders],
   bootstrap: [AppComponent],
-  entryComponents: [ItemDetailsComponent, AddCommentComponent]
+  entryComponents: [ItemDetailsComponent, AddCommentComponent, FormComponent]
 })
 export class AppModule { }

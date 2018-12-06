@@ -5,5 +5,10 @@
   <mat-tab label="Shopping Cart">
     <app-shopping-cart></app-shopping-cart>
   </mat-tab>
-  <mat-tab label="Wish Lists"></mat-tab>
+  <mat-tab label="My Wish Lists">
+    <app-wishlist-view me="true"></app-wishlist-view>
+  </mat-tab>
+  <mat-tab label="Other Wish Lists">
+    <app-wishlist-view me="false"></app-wishlist-view>
+  </mat-tab>
 </mat-tab-group>

@@ -1,0 +1,21 @@
+<table *ngIf="wishLists">
+  <thead>
+    <tr>
+      <th>Name</th>      
+      <th>Description</th>
+      <th>Private</th>
+      <th *ngIf="me === 'true'">Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let wishList of wishLists; let i = index">
+        <td>{{wishList.name}}</td>
+        <td>{{wishList.description}}</td>
+        <td>{{wishList.private}}</td>
+        <td *ngIf="me === 'true'"><button mat-raised-button color="warn" (click)="remove(i)">Remove</button></td>
+        <td><button mat-raied-button (click)="details(i)">Details</button></td>
+      </tr>
+  </tbody>
+</table>
+
+<button *ngIf="me === 'true'" mat-raised-button color="primary" (click)="add()">Add Item</button>

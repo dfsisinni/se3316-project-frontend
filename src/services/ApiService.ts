@@ -7,6 +7,8 @@ import { ItemResponse } from "src/models/api/response/ItemResponse";
 import { ShoppingCartEntry } from "src/redux/objects/ShoppingCartEntry";
 import { CreateCommentRequest } from "src/models/api/request/CreateCommentRequest";
 import { CommentResponse } from "src/models/api/response/CommentResponse";
+import { WishListResponse } from "src/models/api/response/WishListResponse";
+import { WishListRequest } from "src/models/api/request/WishListRequest";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -139,6 +141,30 @@ export class ApiService {
         });
     }
 
+    public static async createWishList(wishList: WishListRequest, token: string) {
+        return fetch(ApiService.BASE_URL + "/api/wishlist", {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(wishList)
+        })
+        .then((repsonse) => repsonse.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<WishListResponse>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+
+    }
+
     public static async purchaseItem(items: ShoppingCartEntry[], token: string) {
         return fetch(ApiService.BASE_URL + "/api/item", {
             method: "POST",
@@ -153,6 +179,51 @@ export class ApiService {
         .then((response: Response<any>) => {
             if (response.status) {
                 return response as Response<ShoppingCartEntry[]>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async getOtherWishLists(token: string) {
+        return fetch(ApiService.BASE_URL + "/api/wishlist", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<WishListResponse[]>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async updateWishList(request: WishListRequest, wishListId: string, token: string) {
+        return fetch(ApiService.BASE_URL + "/api/wishlist/" + wishListId, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(request)
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<string>;
             } else {
                 alert(response.response);
             }
@@ -182,6 +253,50 @@ export class ApiService {
         .then((response: Response<any>) => {
             if (response.status) {
                 return response as Response<CommentResponse>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async getMyWishLists(token: string) {
+        return fetch(ApiService.BASE_URL + "/api/wishlist/me", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<WishListResponse[]>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async deleteMyWishList(token: string, wishListId: string) {
+        return fetch(ApiService.BASE_URL + "/api/wishlist/" + wishListId, {
+            method: "DELETE",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<string>;
             } else {
                 alert(response.response);
             }

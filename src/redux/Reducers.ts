@@ -6,11 +6,16 @@ import { ChangeStoreQuantityAction } from './actions/ChangeStoreQuantityAction';
 import { SetItemAction } from './actions/SetItemAction';
 import { RemoveItemFromCart } from './actions/RemoveItemFromCart';
 import { AddCommentAction } from './actions/AddCommentAction';
+import { SetMyWishListsAction } from './actions/SetMyWishListsAction';
+import { AddMyWishListAction } from './actions/AddMyWishListAction';
+import { DeleteMyWishListAction } from './actions/DeleteMyWishListAction';
+import { UpdateMyWishListAction } from './actions/UpdateMyWishListAction';
 
 const initialState: AppState = {
     title: "Lab 5",
     user: undefined,
-    store: []
+    store: [],
+    otherLists: []
 };
 
 export default function app(state: AppState = initialState, action: Action<any>): AppState {
@@ -25,7 +30,8 @@ export default function app(state: AppState = initialState, action: Action<any>)
                 token: props.token,
                 shoppingCart: {
                     items: []
-                }
+                },
+                wishLists: []
             }
         };
     } else if (action.type === ActionType.CHANGE_STORE_QUANTITY) {
@@ -105,6 +111,58 @@ export default function app(state: AppState = initialState, action: Action<any>)
         item.comments.push(props.comment);
 
         return newState;
+    } else if (action.type === ActionType.SET_MY_WISH_LISTS) {
+        const props = action.payload as SetMyWishListsAction;
+
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                wishLists: props.wishLists
+            }
+        };
+    } else if (action.type === ActionType.ADD_MY_WISH_LIST) {
+        const props = action.payload as AddMyWishListAction;
+
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                wishLists: [
+                    ...state.user.wishLists,
+                    props.wishList
+                ]
+            }
+        };
+    } else if (action.type === ActionType.DELETE_MY_WISH_LIST) {
+        const props = action.payload as DeleteMyWishListAction;
+
+        return {
+            ...state,
+            user: {
+                ...state.user,
+                wishLists: [
+                    ...state.user.wishLists.slice(0, props.index),
+                    ...state.user.wishLists.slice(props.index + 1)
+                ]
+            }
+        };
+    } else if (action.type === ActionType.UPDATE_MY_WISH_LIST) {
+        const props = action.payload as UpdateMyWishListAction;
+
+        const newState = {
+            ...state
+        };
+        newState.user.wishLists[props.index] = props.response;
+
+        return newState;
+    } else if (action.type === ActionType.SET_OTHER_WISH_LISTS) {
+        const props = action.payload as SetMyWishListsAction;
+
+        return {
+            ...state,
+            otherLists: props.wishLists
+        };
     }
  
     return state;
