@@ -4,5 +4,6 @@ export enum ActionType {
     SET_ITEM_ACTION,
     REMOVE_ITEM_FROM_CART,
     REMOVE_ALL_FROM_CART,
-    BUY_ITEMS
+    BUY_ITEMS,
+    ADD_COMMENT
 }

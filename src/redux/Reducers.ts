@@ -5,6 +5,7 @@ import { LoginAction } from './actions/LoginAction';
 import { ChangeStoreQuantityAction } from './actions/ChangeStoreQuantityAction';
 import { SetItemAction } from './actions/SetItemAction';
 import { RemoveItemFromCart } from './actions/RemoveItemFromCart';
+import { AddCommentAction } from './actions/AddCommentAction';
 
 const initialState: AppState = {
     title: "Lab 5",
@@ -92,6 +93,17 @@ export default function app(state: AppState = initialState, action: Action<any>)
             ...state,
         };
         newState.user.shoppingCart.items = [];
+        return newState;
+    } else if (action.type === ActionType.ADD_COMMENT) {
+        const props = action.payload as AddCommentAction;
+
+        const newState = {
+            ...state
+        };
+
+        const item = newState.store.find(x => x.id === props.itemId);
+        item.comments.push(props.comment);
+
         return newState;
     }
  

@@ -5,6 +5,8 @@ import { TokenResponse } from "src/models/api/response/TokenResponse";
 import { UserInfoResponse } from "src/models/api/response/UserInfoResponse";
 import { ItemResponse } from "src/models/api/response/ItemResponse";
 import { ShoppingCartEntry } from "src/redux/objects/ShoppingCartEntry";
+import { CreateCommentRequest } from "src/models/api/request/CreateCommentRequest";
+import { CommentResponse } from "src/models/api/response/CommentResponse";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
@@ -151,6 +153,35 @@ export class ApiService {
         .then((response: Response<any>) => {
             if (response.status) {
                 return response as Response<ShoppingCartEntry[]>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            alert(err);
+        });
+    }
+
+    public static async createComment(message: string, rating: number, itemId: string, token: string) {
+        const createComment: CreateCommentRequest = {
+            comment: message,
+            rating: rating,
+            itemId: itemId
+        }
+
+        return fetch(ApiService.BASE_URL + "/api/comment", {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(createComment)
+        })
+        .then((response) => response.json())
+        .then((response: Response<any>) => {
+            if (response.status) {
+                return response as Response<CommentResponse>;
             } else {
                 alert(response.response);
             }

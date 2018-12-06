@@ -24,6 +24,7 @@
     "@angular/router": "~7.0.0",
     "@types/validate.js": "^0.11.0",
     "core-js": "^2.5.4",
+    "moment": "^2.22.2",
     "ng-redux": "^4.1.0",
     "redux": "^4.0.1",
     "rxjs": "~6.3.3",

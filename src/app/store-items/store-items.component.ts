@@ -22,8 +22,9 @@ export class StoreItemsComponent implements OnInit {
   items: ItemWithRating[];
   displayedColumns = ['name', 'quantity', 'price', 'rating', 'add', 'details'];
   email: string;
+  token: string;
 
-  @Input() sortLimitTen: boolean;
+  @Input() sortLimitTen: string;
 
   constructor(@Inject(AppStore) private store: Store<AppState>, public dialog: MatDialog) {
     ApiService.getItems()
@@ -51,10 +52,9 @@ export class StoreItemsComponent implements OnInit {
         };
       });
 
-      console.log(this.sortLimitTen);
-      if (this.sortLimitTen) {
+      if (this.sortLimitTen === "true") {
         this.items = this.items.sort((a: ItemWithRating, b: ItemWithRating) => {
-          return a.rating - b.rating;
+          return b.rating - a.rating;
         }).slice(0, 10);
       }
 
@@ -70,6 +70,7 @@ export class StoreItemsComponent implements OnInit {
 
     if (state.user) {
       this.email = state.user.email;
+      this.token = state.user.token;
     }
 
     if (this.authorizedCustomer) {
@@ -94,7 +95,8 @@ export class StoreItemsComponent implements OnInit {
     this.dialog.open(AddCommentComponent, {
       data: {
         item: this.items[index],
-        userId: this.email
+        email: this.email,
+        token: this.token
       }
     });
   }

@@ -8,6 +8,8 @@ import { SetItemAction } from "./actions/SetItemAction";
 import { RemoveItemFromCart } from "./actions/RemoveItemFromCart";
 import { ShoppingCartEntry } from "./objects/ShoppingCartEntry";
 import { PurchaseItemsAction } from "./actions/PurchaseItemsAction";
+import { CommentResponse } from "src/models/api/response/CommentResponse";
+import { AddCommentAction } from "./actions/AddCommentAction";
 
 
 export class ActionCreator {
@@ -59,6 +61,15 @@ export class ActionCreator {
         };
 
         return ActionCreator.createAction(action, ActionType.BUY_ITEMS);
+    }
+
+    public static createAddCommentAction(comment: CommentResponse, itemId: string) {
+        const action: AddCommentAction = {
+            comment: comment,
+            itemId: itemId
+        };
+
+        return ActionCreator.createAction(action, ActionType.ADD_COMMENT);
     }
 
     private static createAction<T>(action: T, type: ActionType): Action<T> {

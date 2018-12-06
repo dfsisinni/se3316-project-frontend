@@ -1,6 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ItemWithRating } from 'src/models/ItemWithRating';
 import {MAT_DIALOG_DATA} from '@angular/material';
+import { ApiService } from 'src/services/ApiService';
+import { AppStore } from 'src/redux/Store';
+import { AppState } from 'src/redux/AppState';
+import { Store } from 'redux';
+import { ActionCreator } from 'src/redux/ActionCreator';
+import { CommentResponse } from 'src/models/api/response/CommentResponse';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-comment',
@@ -13,19 +20,41 @@ export class AddCommentComponent implements OnInit {
 
   comment: string;
   rating: number;
+  token: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, @Inject(AppStore) private store: Store<AppState>) {
     this.item = data.item;
     this.email = data.email
+    this.token = data.token;
   }
 
   ngOnInit() {
   }
 
-  values() {
-    console.log(this.comment);
-    console.log(this.rating);
-    console.log(this.item);
+  async createComment() {
+    if (this.comment.length === 0) {
+      alert("Please enter a valid comment!");
+      return;
+    } 
+
+    if (this.rating < 0 || this.rating > 5) {
+      alert("Please enter a rating between 0 and 5 inclusive!");
+      return;
+    }
+
+    if (confirm("Are you sure you want to create a comment?")) {
+      const comment = await ApiService.createComment(this.comment, this.rating, this.item.id, this.token);
+      if (comment && comment.status) {
+        const resp: CommentResponse = {
+          email: this.email,
+          rating: this.rating,
+          comment: this.comment,
+          createdOn: moment().unix(),
+          hidden: false
+        };
+        this.store.dispatch(ActionCreator.createAddCommentAction(resp, this.item.id));
+      }
+    }
   }
 
 }
