@@ -14,6 +14,7 @@ export class AppComponent {
   title: string;
   user: User;
   isAuthenticatedCustomer: boolean;
+  isAuthenticatedManager: boolean;
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     store.subscribe(() => this.readState());
@@ -25,5 +26,6 @@ export class AppComponent {
     this.title = state.title;
     this.user = state.user;
     this.isAuthenticatedCustomer = this.user && this.user.type === UserType.CUSTOMER;
+    this.isAuthenticatedManager = this.user && this.user.type === UserType.MANAGER;
   }
 }

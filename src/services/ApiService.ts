@@ -9,15 +9,16 @@ import { CreateCommentRequest } from "src/models/api/request/CreateCommentReques
 import { CommentResponse } from "src/models/api/response/CommentResponse";
 import { WishListResponse } from "src/models/api/response/WishListResponse";
 import { WishListRequest } from "src/models/api/request/WishListRequest";
+import { UpdateUserRequest } from "src/models/api/request/UpdateUserRequest";
 
 export class ApiService {
     private static readonly BASE_URL: string = "http://localhost:5000";
+    private static readonly MANAGER: string = "store manager";
     private static readonly EMAIL_CONSTRAINTS = {
         from: {
             email: true
         }
     };
-
 
     private constructor () {
     }
@@ -28,10 +29,12 @@ export class ApiService {
             password: password
         }
 
-        const error = validate({ from: email }, ApiService.EMAIL_CONSTRAINTS);
-        if (!email || error) {
-            alert("Invalid email!");
-            return;
+        if (email !== ApiService.MANAGER) {
+            const error = validate({ from: email }, ApiService.EMAIL_CONSTRAINTS);
+            if (!email || error) {
+                alert("Invalid email!");
+                return;
+            }
         }
 
         if (!password) {
@@ -163,6 +166,56 @@ export class ApiService {
             alert(err);
         });
 
+    }
+
+    public static async getUsers(token: string) {
+        return fetch(ApiService.BASE_URL + "/api/manager/users", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .then((response: Response<any>) => {
+            console.log(response);
+            if (response.status) {
+                return response as Response<UserInfoResponse[]>;
+            } else {
+                alert(response.response);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            alert(err);
+        });
+    }
+
+    public static async updateUser(token: string, request: UpdateUserRequest, userId: string) {
+        return fetch(ApiService.BASE_URL + "/api/manager/user/" + userId, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+            body: JSON.stringify(request)
+        })
+            .then((res) => res.json())
+            .then((response: Response<any>) => {
+                if (response.status) {
+                    return response as Response<string>;
+                } else {
+                    alert(response.response);
+                }
+            })
+            .catch((err) => {
+                alert(err);
+            });
     }
 
     public static async purchaseItem(items: ShoppingCartEntry[], token: string) {

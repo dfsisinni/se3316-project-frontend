@@ -1,6 +1,6 @@
 import { UserType } from "../UserType";
 
 export interface UpdateUserRequest {
-    manager: boolean;
+    active: boolean;
     type: UserType;
 }

@@ -28,6 +28,8 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { WishlistViewComponent } from './wishlist-view/wishlist-view.component';
 import { FormComponent } from './wishlist-view/form/form.component';
+import { ManagerViewComponent } from './manager-view/manager-view.component';
+import { UserListComponent } from './manager-view/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { FormComponent } from './wishlist-view/form/form.component';
     ItemDetailsComponent,
     AddCommentComponent,
     WishlistViewComponent,
-    FormComponent
+    FormComponent,
+    ManagerViewComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

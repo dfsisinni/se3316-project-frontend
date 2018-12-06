@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id<th>
+      <th>Email</th>
+      <th>Type</th>
+      <th>Active</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users; let i = index">
+      <td>{{user.id}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.type === 0 ? "Customer" : "Manager"}}</td>
+      <td>{{user.active ? "Active" : "Inactive"}}</td>
+      <td><button mat-button color="primary" (click)="switchActive(i)">Switch Active</button></td>
+      <td><button mat-button color="primary" (click)="switchType(i)">Switch Type</button></td>
+    </tr>
+  </tbody>
+</table>

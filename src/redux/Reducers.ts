@@ -10,12 +10,17 @@ import { SetMyWishListsAction } from './actions/SetMyWishListsAction';
 import { AddMyWishListAction } from './actions/AddMyWishListAction';
 import { DeleteMyWishListAction } from './actions/DeleteMyWishListAction';
 import { UpdateMyWishListAction } from './actions/UpdateMyWishListAction';
+import { SetManagerUsersAction } from './actions/SetManagerUsersAction';
+import { UpdateUserAction } from './actions/UpdateUserAction';
 
 const initialState: AppState = {
     title: "Lab 5",
     user: undefined,
     store: [],
-    otherLists: []
+    otherLists: [],
+    manager: {
+        users: []
+    }
 };
 
 export default function app(state: AppState = initialState, action: Action<any>): AppState {
@@ -163,6 +168,27 @@ export default function app(state: AppState = initialState, action: Action<any>)
             ...state,
             otherLists: props.wishLists
         };
+    } else if (action.type === ActionType.SET_MANAGER_USERS) {
+        const props = action.payload as SetManagerUsersAction;
+
+        return {
+            ...state,
+            manager: {
+                ...state.manager,
+                users: props.users
+            }
+        };
+    } else if (action.type === ActionType.UPDATE_MANAGER_USER) {
+        const props = action.payload as UpdateUserAction;
+
+        const newState = {
+            ...state
+        };
+        const user = newState.manager.users[props.index];
+        user.active = props.active;
+        user.type = props.type;
+
+        return newState;
     }
  
     return state;

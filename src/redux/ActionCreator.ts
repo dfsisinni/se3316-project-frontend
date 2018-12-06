@@ -15,6 +15,9 @@ import { SetMyWishListsAction } from "./actions/SetMyWishListsAction";
 import { AddMyWishListAction } from "./actions/AddMyWishListAction";
 import { DeleteMyWishListAction } from "./actions/DeleteMyWishListAction";
 import { UpdateMyWishListAction } from "./actions/UpdateMyWishListAction";
+import { SetManagerUsersAction } from "./actions/SetManagerUsersAction";
+import { UserType } from "src/models/api/UserType";
+import { UpdateUserAction } from "./actions/UpdateUserAction";
 
 
 export class ActionCreator {
@@ -116,6 +119,24 @@ export class ActionCreator {
         };
 
         return ActionCreator.createAction(action, ActionType.SET_OTHER_WISH_LISTS);
+    }
+
+    public static createUpdateManagerUsersAction(users: UserInfoResponse[]) {
+        const action: SetManagerUsersAction = {
+            users: users
+        };
+
+        return ActionCreator.createAction(action, ActionType.SET_MANAGER_USERS);
+    }
+
+    public static createUpdateUserAction(active: boolean, index: number, type: UserType) {
+        const action: UpdateUserAction = {
+            active: active,
+            index: index,
+            type: type
+        };
+
+        return ActionCreator.createAction(action, ActionType.UPDATE_MANAGER_USER);
     }
 
     private static createAction<T>(action: T, type: ActionType): Action<T> {

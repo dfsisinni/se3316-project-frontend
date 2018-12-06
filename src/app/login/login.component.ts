@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       const me = await ApiService.me(token);
       if (me && me.status) {
         if (!me.response.active) {
-          alert("Contact the store manager your account is inactie!");
+          alert("Contact the store manager your account is inactive!");
         } else {
           this.store.dispatch(ActionCreator.createLoginAction(token, me.response));
         }
